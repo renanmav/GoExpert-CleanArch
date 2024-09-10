@@ -45,3 +45,18 @@ mysql -u user -p orders # Enter password: password
 DESCRIBE orders;
 SELECT * FROM orders;
 ```
+
+## Accessing the web server API
+
+Once the application is running, you can access the web server API at `http://localhost:8000` (check `.env` file).
+
+Example request to create an order:
+
+```bash
+curl -X POST http://localhost:8000/order \
+-H "Content-Type: application/json" \
+-d '{
+    "price": 100.50,
+    "tax": 10.05
+  }'
+```
