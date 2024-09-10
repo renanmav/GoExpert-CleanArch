@@ -5,12 +5,19 @@ import (
 	"fmt"
 
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/renanmav/GoExpert-CleanArch/config"
 	"github.com/renanmav/GoExpert-CleanArch/internal/repository"
 	"github.com/renanmav/GoExpert-CleanArch/internal/usecase"
 )
 
 func main() {
-	db, err := sql.Open("mysql", "user:password@tcp(localhost:3306)/orders?charset=utf8mb4&parseTime=True&loc=Local")
+	cfg, err := config.LoadConfig("../")
+	if err != nil {
+		panic(err)
+	}
+
+	connectionString := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local", cfg.DBUser, cfg.DBPassword, cfg.DBHost, cfg.DBPort, cfg.DBName)
+	db, err := sql.Open(cfg.DBDriver, connectionString)
 	if err != nil {
 		panic(err)
 	}
