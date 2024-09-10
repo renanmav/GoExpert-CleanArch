@@ -24,3 +24,24 @@ Clean Architecture is a software design philosophy that separates the elements o
     1. The order cannot have a price equal or less than 0
     1. The order cannot have a tax equal or less than 0
 1. The order can be read by ID
+
+## Running the application
+
+1. Clone the repository
+1. Run `docker-compose up -d` to start the infrastructure
+1. Run `go run cmd/main.go` to start the application
+
+## Checking the data
+
+1. Run `docker exec -it mysql bash` to access the MySQL container
+
+```bash
+mysql -u user -p orders # Enter password: password
+```
+
+1. Check the data
+
+```bash
+DESCRIBE orders;
+SELECT * FROM orders;
+```
