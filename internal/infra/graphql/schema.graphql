@@ -12,6 +12,7 @@ input CreateOrderInput {
 
 type Query {
     readAllOrders: [Order!]!
+    readOrderById(id: ID!): Order!
 }
 
 type Mutation {

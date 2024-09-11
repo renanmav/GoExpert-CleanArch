@@ -11,15 +11,18 @@ type OrderService struct {
 	proto.UnimplementedOrderServiceServer
 	CreateOrderUseCase   usecase.CreateOrderUseCase
 	ReadAllOrdersUseCase usecase.ReadAllOrdersUseCase
+	ReadOrderByIdUseCase usecase.ReadOrderByIdUseCase
 }
 
 func NewOrderService(
 	createOrderUseCase usecase.CreateOrderUseCase,
 	readAllOrdersUseCase usecase.ReadAllOrdersUseCase,
+	readOrderByIdUseCase usecase.ReadOrderByIdUseCase,
 ) *OrderService {
 	return &OrderService{
 		CreateOrderUseCase:   createOrderUseCase,
 		ReadAllOrdersUseCase: readAllOrdersUseCase,
+		ReadOrderByIdUseCase: readOrderByIdUseCase,
 	}
 }
 
@@ -35,10 +38,12 @@ func (s *OrderService) CreateOrder(ctx context.Context, req *proto.CreateOrderRe
 	}
 
 	return &proto.CreateOrderResponse{
-		Id:         output.ID,
-		Price:      float32(output.Price),
-		Tax:        float32(output.Tax),
-		FinalPrice: float32(output.FinalPrice),
+		Order: &proto.Order{
+			Id:         output.ID,
+			Price:      float32(output.Price),
+			Tax:        float32(output.Tax),
+			FinalPrice: float32(output.FinalPrice),
+		},
 	}, nil
 }
 
@@ -60,5 +65,25 @@ func (s *OrderService) RealAllOrders(ctx context.Context, req *proto.RealAllOrde
 
 	return &proto.RealAllOrdersResponse{
 		Orders: orders,
+	}, nil
+}
+
+func (s *OrderService) ReadOrderById(ctx context.Context, req *proto.ReadOrderByIdRequest) (*proto.ReadOrderByIdResponse, error) {
+	input := usecase.ReadOrderByIdInput{
+		ID: req.Id,
+	}
+
+	output, err := s.ReadOrderByIdUseCase.Execute(input)
+	if err != nil {
+		return nil, err
+	}
+
+	return &proto.ReadOrderByIdResponse{
+		Order: &proto.Order{
+			Id:         output.ID,
+			Price:      float32(output.Price),
+			Tax:        float32(output.Tax),
+			FinalPrice: float32(output.FinalPrice),
+		},
 	}, nil
 }

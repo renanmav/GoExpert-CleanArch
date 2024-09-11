@@ -69,6 +69,12 @@ Example request to read all orders:
 curl -X GET http://localhost:8000/orders
 ```
 
+Example request to read an order by ID:
+
+```bash
+curl -X GET http://localhost:8000/order?id=123
+```
+
 ## Generating gRPC code
 
 Make sure you have the protocol buffer compiler and the Go plugin installed. You can install the protocol buffer compiler [here](https://grpc.io/docs/protoc-installation/).
@@ -105,6 +111,17 @@ evans -r repl
 package proto
 service OrderService
 call RealAllOrders
+```
+
+Example request to read an order by ID:
+
+```bash
+evans -r repl
+
+# From the repl, run the following commands
+package proto
+service OrderService
+call ReadOrderById
 ```
 
 ## Generating GraphQL code
@@ -144,6 +161,19 @@ Example request to read all orders:
 ```graphql
 query ReadAllOrders {
   readAllOrders {
+    id
+    price
+    tax
+    finalPrice
+  }
+}
+```
+
+Example request to read an order by ID:
+
+```graphql
+query ReadOrderById {
+  readOrderById(id: "123") {
     id
     price
     tax

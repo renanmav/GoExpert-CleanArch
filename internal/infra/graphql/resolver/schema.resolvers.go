@@ -52,6 +52,25 @@ func (r *queryResolver) ReadAllOrders(ctx context.Context) ([]*model.Order, erro
 	return ordersModel, nil
 }
 
+// ReadOrderByID is the resolver for the readOrderById field.
+func (r *queryResolver) ReadOrderByID(ctx context.Context, id string) (*model.Order, error) {
+	dto := usecase.ReadOrderByIdInput{
+		ID: id,
+	}
+
+	order, err := r.ReadOrderByIdUseCase.Execute(dto)
+	if err != nil {
+		return nil, err
+	}
+
+	return &model.Order{
+		ID:         order.ID,
+		Price:      order.Price,
+		Tax:        order.Tax,
+		FinalPrice: order.FinalPrice,
+	}, nil
+}
+
 // Mutation returns generated.MutationResolver implementation.
 func (r *Resolver) Mutation() generated.MutationResolver { return &mutationResolver{r} }
 

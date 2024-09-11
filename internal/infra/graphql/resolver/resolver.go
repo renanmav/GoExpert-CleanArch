@@ -9,4 +9,5 @@ import "github.com/renanmav/GoExpert-CleanArch/internal/usecase"
 type Resolver struct {
 	CreateOrderUseCase   usecase.CreateOrderUseCase
 	ReadAllOrdersUseCase usecase.ReadAllOrdersUseCase
+	ReadOrderByIdUseCase usecase.ReadOrderByIdUseCase
 }

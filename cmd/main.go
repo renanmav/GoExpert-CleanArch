@@ -31,18 +31,20 @@ func main() {
 		orderCreatedEvent,
 	)
 	readAllOrdersUseCase := usecase.NewReadAllOrdersUseCase(orderRepository)
+	readOrderByIdUseCase := usecase.NewReadOrderByIdUseCase(orderRepository)
 
 	webServer := webserver.NewWebServer(cfg.WebServerPort)
-	orderWebServerHandler := webserver.NewOrderWebServerHandler(*createOrderUseCase, *readAllOrdersUseCase)
-	webServer.AddHandler("/order", orderWebServerHandler.HandleCreateOrder)
-	webServer.AddHandler("/orders", orderWebServerHandler.HandleReadAllOrders)
+	orderWebServerHandler := webserver.NewOrderWebServerHandler(*createOrderUseCase, *readAllOrdersUseCase, *readOrderByIdUseCase)
+	webServer.AddHandler("POST", "/order", orderWebServerHandler.HandleCreateOrder)
+	webServer.AddHandler("GET", "/orders", orderWebServerHandler.HandleReadAllOrders)
+	webServer.AddHandler("GET", "/order", orderWebServerHandler.HandleReadOrderById)
 	go webServer.Start()
 
 	grpcServer := grpc.NewGrpcServer(cfg.GrpcServerPort)
-	orderGrpcService := grpc.NewOrderService(*createOrderUseCase, *readAllOrdersUseCase)
+	orderGrpcService := grpc.NewOrderService(*createOrderUseCase, *readAllOrdersUseCase, *readOrderByIdUseCase)
 	proto.RegisterOrderServiceServer(grpcServer.Server, orderGrpcService)
 	go grpcServer.Start()
 
-	graphqlServer := graphql.NewGraphQLServer(cfg.GraphqlServerPort, *createOrderUseCase, *readAllOrdersUseCase)
+	graphqlServer := graphql.NewGraphQLServer(cfg.GraphqlServerPort, *createOrderUseCase, *readAllOrdersUseCase, *readOrderByIdUseCase)
 	graphqlServer.Start()
 }

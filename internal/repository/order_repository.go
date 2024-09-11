@@ -2,6 +2,7 @@ package repository
 
 import (
 	"database/sql"
+	"time"
 
 	"github.com/renanmav/GoExpert-CleanArch/internal/entity"
 )
@@ -23,7 +24,7 @@ func (r *OrderRepository) Save(order *entity.Order) error {
 }
 
 func (r *OrderRepository) FindAll() ([]*entity.Order, error) {
-	rows, err := r.db.Query("SELECT id, price, tax, final_price FROM orders")
+	rows, err := r.db.Query("SELECT id, price, tax, final_price, created_at FROM orders ORDER BY created_at ASC")
 	if err != nil {
 		return nil, err
 	}
@@ -32,10 +33,9 @@ func (r *OrderRepository) FindAll() ([]*entity.Order, error) {
 	orders := []*entity.Order{}
 	for rows.Next() {
 		var id string
-		var price float64
-		var tax float64
-		var finalPrice float64
-		err = rows.Scan(&id, &price, &tax, &finalPrice)
+		var price, tax, finalPrice float64
+		var createdAt time.Time
+		err = rows.Scan(&id, &price, &tax, &finalPrice, &createdAt)
 		if err != nil {
 			return nil, err
 		}
