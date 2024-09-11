@@ -41,5 +41,6 @@ func main() {
 	go grpcServer.Start()
 
 	graphqlServer := graphql.NewGraphQLServer(cfg.GraphqlServerPort)
+	graphqlServer.RegisterCreateOrderUseCase(*createOrderUseCase)
 	graphqlServer.Start()
 }

@@ -8,10 +8,12 @@ import (
 	"github.com/99designs/gqlgen/graphql/playground"
 	"github.com/renanmav/GoExpert-CleanArch/internal/infra/graphql/generated"
 	"github.com/renanmav/GoExpert-CleanArch/internal/infra/graphql/resolver"
+	"github.com/renanmav/GoExpert-CleanArch/internal/usecase"
 )
 
 type GraphQLServer struct {
-	Port string
+	Port               string
+	CreateOrderUseCase usecase.CreateOrderUseCase
 }
 
 func NewGraphQLServer(port string) *GraphQLServer {
@@ -20,10 +22,18 @@ func NewGraphQLServer(port string) *GraphQLServer {
 	}
 }
 
+func (g *GraphQLServer) RegisterCreateOrderUseCase(createOrderUseCase usecase.CreateOrderUseCase) {
+	g.CreateOrderUseCase = createOrderUseCase
+}
+
 func (g *GraphQLServer) Start() {
 	fmt.Println("Starting GraphQL server on port:", g.Port)
 
-	schema := generated.NewExecutableSchema(generated.Config{Resolvers: &resolver.Resolver{}})
+	r := resolver.Resolver{
+		CreateOrderUseCase: g.CreateOrderUseCase,
+	}
+
+	schema := generated.NewExecutableSchema(generated.Config{Resolvers: &r})
 
 	srv := handler.NewDefaultServer(schema)
 

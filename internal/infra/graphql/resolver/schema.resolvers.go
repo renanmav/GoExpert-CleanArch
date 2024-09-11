@@ -10,11 +10,27 @@ import (
 
 	"github.com/renanmav/GoExpert-CleanArch/internal/infra/graphql/generated"
 	"github.com/renanmav/GoExpert-CleanArch/internal/infra/graphql/model"
+	"github.com/renanmav/GoExpert-CleanArch/internal/usecase"
 )
 
 // CreateOrder is the resolver for the createOrder field.
 func (r *mutationResolver) CreateOrder(ctx context.Context, input model.CreateOrderInput) (*model.Order, error) {
-	panic(fmt.Errorf("not implemented: CreateOrder - createOrder"))
+	dto := usecase.CreateOrderInput{
+		Price: input.Price,
+		Tax:   input.Tax,
+	}
+
+	order, err := r.CreateOrderUseCase.Execute(dto)
+	if err != nil {
+		return nil, err
+	}
+
+	return &model.Order{
+		ID:         order.ID,
+		Price:      order.Price,
+		Tax:        order.Tax,
+		FinalPrice: order.FinalPrice,
+	}, nil
 }
 
 // Orders is the resolver for the orders field.
