@@ -4,8 +4,11 @@ import (
 	"database/sql"
 
 	"github.com/renanmav/GoExpert-CleanArch/config"
+	"github.com/renanmav/GoExpert-CleanArch/internal/delivery/grpc"
+	"github.com/renanmav/GoExpert-CleanArch/internal/delivery/grpc/proto"
 	"github.com/renanmav/GoExpert-CleanArch/internal/delivery/webserver"
 	"github.com/renanmav/GoExpert-CleanArch/internal/repository"
+	"github.com/renanmav/GoExpert-CleanArch/internal/usecase"
 
 	// mysql driver
 	_ "github.com/go-sql-driver/mysql"
@@ -24,9 +27,15 @@ func main() {
 	defer db.Close()
 
 	orderRepository := repository.NewOrderRepository(db)
+	createOrderUseCase := usecase.NewCreateOrderUseCase(orderRepository)
 
 	webServer := webserver.NewWebServer(cfg.WebServerPort)
-	orderWebServerHandler := webserver.NewOrderWebServerHandler(orderRepository)
+	orderWebServerHandler := webserver.NewOrderWebServerHandler(*createOrderUseCase)
 	webServer.AddHandler("/order", orderWebServerHandler.HandleCreateOrder)
-	webServer.Start()
+	go webServer.Start()
+
+	grpcServer := grpc.NewGrpcServer(cfg.GrpcServerPort)
+	orderGrpcService := grpc.NewOrderService(*createOrderUseCase)
+	proto.RegisterOrderServiceServer(grpcServer.Server, orderGrpcService)
+	grpcServer.Start()
 }

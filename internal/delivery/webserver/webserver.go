@@ -9,16 +9,16 @@ import (
 )
 
 type WebServer struct {
-	Router        chi.Router
-	Handlers      map[string]http.HandlerFunc
-	WebServerPort string
+	Router   chi.Router
+	Handlers map[string]http.HandlerFunc
+	Port     string
 }
 
 func NewWebServer(webServerPort string) *WebServer {
 	return &WebServer{
-		Router:        chi.NewRouter(),
-		Handlers:      make(map[string]http.HandlerFunc),
-		WebServerPort: webServerPort,
+		Router:   chi.NewRouter(),
+		Handlers: make(map[string]http.HandlerFunc),
+		Port:     webServerPort,
 	}
 }
 
@@ -27,10 +27,10 @@ func (w *WebServer) AddHandler(path string, handler http.HandlerFunc) {
 }
 
 func (w *WebServer) Start() {
+	fmt.Println("Starting web server on port:", w.Port)
 	w.Router.Use(middleware.Logger)
 	for path, handler := range w.Handlers {
 		w.Router.Handle(path, handler)
 	}
-	fmt.Println("Starting web server on port:", w.WebServerPort)
-	http.ListenAndServe(w.WebServerPort, w.Router)
+	http.ListenAndServe(w.Port, w.Router)
 }

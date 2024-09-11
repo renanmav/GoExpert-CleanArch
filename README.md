@@ -60,3 +60,30 @@ curl -X POST http://localhost:8000/order \
     "tax": 10.05
   }'
 ```
+
+## Generating gRPC code
+
+Make sure you have the protocol buffer compiler and the Go plugin installed. You can install the protocol buffer compiler [here](https://grpc.io/docs/protoc-installation/).
+
+After installing the protocol buffer compiler, you can generate the gRPC code by running the following command:
+
+```bash
+protoc --go_out=. --go-grpc_out=. ./internal/delivery/grpc/proto/order.proto
+```
+
+## Accessing the gRPC server
+
+Once the application is running, you can access the gRPC server at `http://localhost:50051` (check `.env` file).
+
+You can use a GRPC client to send requests to the server, like [Evans](https://github.com/ktr0731/evans).
+
+Example request to create an order:
+
+```bash
+evans -r repl
+
+# From the repl, run the following commands
+package proto
+service OrderService
+call CreateOrder
+```

@@ -4,17 +4,16 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/renanmav/GoExpert-CleanArch/internal/repository"
 	"github.com/renanmav/GoExpert-CleanArch/internal/usecase"
 )
 
 type OrderWebServerHandler struct {
-	OrderRepository repository.OrderRepositoryInterface
+	CreateOrderUseCase usecase.CreateOrderUseCase
 }
 
-func NewOrderWebServerHandler(orderRepository repository.OrderRepositoryInterface) *OrderWebServerHandler {
+func NewOrderWebServerHandler(createOrderUseCase usecase.CreateOrderUseCase) *OrderWebServerHandler {
 	return &OrderWebServerHandler{
-		OrderRepository: orderRepository,
+		CreateOrderUseCase: createOrderUseCase,
 	}
 }
 
@@ -26,9 +25,7 @@ func (o *OrderWebServerHandler) HandleCreateOrder(w http.ResponseWriter, r *http
 		return
 	}
 
-	createOrderUseCase := usecase.NewCreateOrderUseCase(o.OrderRepository)
-
-	output, err := createOrderUseCase.Execute(input)
+	output, err := o.CreateOrderUseCase.Execute(input)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
