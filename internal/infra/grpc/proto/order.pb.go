@@ -2,7 +2,7 @@
 // versions:
 // 	protoc-gen-go v1.34.2
 // 	protoc        v3.12.4
-// source: internal/delivery/grpc/proto/order.proto
+// source: internal/infra/grpc/proto/order.proto
 
 package proto
 
@@ -32,7 +32,7 @@ type CreateOrderRequest struct {
 func (x *CreateOrderRequest) Reset() {
 	*x = CreateOrderRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_internal_delivery_grpc_proto_order_proto_msgTypes[0]
+		mi := &file_internal_infra_grpc_proto_order_proto_msgTypes[0]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -45,7 +45,7 @@ func (x *CreateOrderRequest) String() string {
 func (*CreateOrderRequest) ProtoMessage() {}
 
 func (x *CreateOrderRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_internal_delivery_grpc_proto_order_proto_msgTypes[0]
+	mi := &file_internal_infra_grpc_proto_order_proto_msgTypes[0]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -58,7 +58,7 @@ func (x *CreateOrderRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateOrderRequest.ProtoReflect.Descriptor instead.
 func (*CreateOrderRequest) Descriptor() ([]byte, []int) {
-	return file_internal_delivery_grpc_proto_order_proto_rawDescGZIP(), []int{0}
+	return file_internal_infra_grpc_proto_order_proto_rawDescGZIP(), []int{0}
 }
 
 func (x *CreateOrderRequest) GetPrice() float32 {
@@ -89,7 +89,7 @@ type CreateOrderResponse struct {
 func (x *CreateOrderResponse) Reset() {
 	*x = CreateOrderResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_internal_delivery_grpc_proto_order_proto_msgTypes[1]
+		mi := &file_internal_infra_grpc_proto_order_proto_msgTypes[1]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -102,7 +102,7 @@ func (x *CreateOrderResponse) String() string {
 func (*CreateOrderResponse) ProtoMessage() {}
 
 func (x *CreateOrderResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_internal_delivery_grpc_proto_order_proto_msgTypes[1]
+	mi := &file_internal_infra_grpc_proto_order_proto_msgTypes[1]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -115,7 +115,7 @@ func (x *CreateOrderResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateOrderResponse.ProtoReflect.Descriptor instead.
 func (*CreateOrderResponse) Descriptor() ([]byte, []int) {
-	return file_internal_delivery_grpc_proto_order_proto_rawDescGZIP(), []int{1}
+	return file_internal_infra_grpc_proto_order_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *CreateOrderResponse) GetId() string {
@@ -146,9 +146,9 @@ func (x *CreateOrderResponse) GetFinalPrice() float32 {
 	return 0
 }
 
-var File_internal_delivery_grpc_proto_order_proto protoreflect.FileDescriptor
+var File_internal_infra_grpc_proto_order_proto protoreflect.FileDescriptor
 
-var file_internal_delivery_grpc_proto_order_proto_rawDesc = []byte{
+var file_internal_infra_grpc_proto_order_proto_rawDesc = []byte{
 	0x0a, 0x28, 0x69, 0x6e, 0x74, 0x65, 0x72, 0x6e, 0x61, 0x6c, 0x2f, 0x64, 0x65, 0x6c, 0x69, 0x76,
 	0x65, 0x72, 0x79, 0x2f, 0x67, 0x72, 0x70, 0x63, 0x2f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2f, 0x6f,
 	0x72, 0x64, 0x65, 0x72, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x12, 0x05, 0x70, 0x72, 0x6f, 0x74,
@@ -174,23 +174,23 @@ var file_internal_delivery_grpc_proto_order_proto_rawDesc = []byte{
 }
 
 var (
-	file_internal_delivery_grpc_proto_order_proto_rawDescOnce sync.Once
-	file_internal_delivery_grpc_proto_order_proto_rawDescData = file_internal_delivery_grpc_proto_order_proto_rawDesc
+	file_internal_infra_grpc_proto_order_proto_rawDescOnce sync.Once
+	file_internal_infra_grpc_proto_order_proto_rawDescData = file_internal_infra_grpc_proto_order_proto_rawDesc
 )
 
-func file_internal_delivery_grpc_proto_order_proto_rawDescGZIP() []byte {
-	file_internal_delivery_grpc_proto_order_proto_rawDescOnce.Do(func() {
-		file_internal_delivery_grpc_proto_order_proto_rawDescData = protoimpl.X.CompressGZIP(file_internal_delivery_grpc_proto_order_proto_rawDescData)
+func file_internal_infra_grpc_proto_order_proto_rawDescGZIP() []byte {
+	file_internal_infra_grpc_proto_order_proto_rawDescOnce.Do(func() {
+		file_internal_infra_grpc_proto_order_proto_rawDescData = protoimpl.X.CompressGZIP(file_internal_infra_grpc_proto_order_proto_rawDescData)
 	})
-	return file_internal_delivery_grpc_proto_order_proto_rawDescData
+	return file_internal_infra_grpc_proto_order_proto_rawDescData
 }
 
-var file_internal_delivery_grpc_proto_order_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
-var file_internal_delivery_grpc_proto_order_proto_goTypes = []any{
+var file_internal_infra_grpc_proto_order_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
+var file_internal_infra_grpc_proto_order_proto_goTypes = []any{
 	(*CreateOrderRequest)(nil),  // 0: proto.CreateOrderRequest
 	(*CreateOrderResponse)(nil), // 1: proto.CreateOrderResponse
 }
-var file_internal_delivery_grpc_proto_order_proto_depIdxs = []int32{
+var file_internal_infra_grpc_proto_order_proto_depIdxs = []int32{
 	0, // 0: proto.OrderService.CreateOrder:input_type -> proto.CreateOrderRequest
 	1, // 1: proto.OrderService.CreateOrder:output_type -> proto.CreateOrderResponse
 	1, // [1:2] is the sub-list for method output_type
@@ -200,13 +200,13 @@ var file_internal_delivery_grpc_proto_order_proto_depIdxs = []int32{
 	0, // [0:0] is the sub-list for field type_name
 }
 
-func init() { file_internal_delivery_grpc_proto_order_proto_init() }
-func file_internal_delivery_grpc_proto_order_proto_init() {
-	if File_internal_delivery_grpc_proto_order_proto != nil {
+func init() { file_internal_infra_grpc_proto_order_proto_init() }
+func file_internal_infra_grpc_proto_order_proto_init() {
+	if File_internal_infra_grpc_proto_order_proto != nil {
 		return
 	}
 	if !protoimpl.UnsafeEnabled {
-		file_internal_delivery_grpc_proto_order_proto_msgTypes[0].Exporter = func(v any, i int) any {
+		file_internal_infra_grpc_proto_order_proto_msgTypes[0].Exporter = func(v any, i int) any {
 			switch v := v.(*CreateOrderRequest); i {
 			case 0:
 				return &v.state
@@ -218,7 +218,7 @@ func file_internal_delivery_grpc_proto_order_proto_init() {
 				return nil
 			}
 		}
-		file_internal_delivery_grpc_proto_order_proto_msgTypes[1].Exporter = func(v any, i int) any {
+		file_internal_infra_grpc_proto_order_proto_msgTypes[1].Exporter = func(v any, i int) any {
 			switch v := v.(*CreateOrderResponse); i {
 			case 0:
 				return &v.state
@@ -235,18 +235,18 @@ func file_internal_delivery_grpc_proto_order_proto_init() {
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: file_internal_delivery_grpc_proto_order_proto_rawDesc,
+			RawDescriptor: file_internal_infra_grpc_proto_order_proto_rawDesc,
 			NumEnums:      0,
 			NumMessages:   2,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
-		GoTypes:           file_internal_delivery_grpc_proto_order_proto_goTypes,
-		DependencyIndexes: file_internal_delivery_grpc_proto_order_proto_depIdxs,
-		MessageInfos:      file_internal_delivery_grpc_proto_order_proto_msgTypes,
+		GoTypes:           file_internal_infra_grpc_proto_order_proto_goTypes,
+		DependencyIndexes: file_internal_infra_grpc_proto_order_proto_depIdxs,
+		MessageInfos:      file_internal_infra_grpc_proto_order_proto_msgTypes,
 	}.Build()
-	File_internal_delivery_grpc_proto_order_proto = out.File
-	file_internal_delivery_grpc_proto_order_proto_rawDesc = nil
-	file_internal_delivery_grpc_proto_order_proto_goTypes = nil
-	file_internal_delivery_grpc_proto_order_proto_depIdxs = nil
+	File_internal_infra_grpc_proto_order_proto = out.File
+	file_internal_infra_grpc_proto_order_proto_rawDesc = nil
+	file_internal_infra_grpc_proto_order_proto_goTypes = nil
+	file_internal_infra_grpc_proto_order_proto_depIdxs = nil
 }

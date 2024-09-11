@@ -68,7 +68,7 @@ Make sure you have the protocol buffer compiler and the Go plugin installed. You
 After installing the protocol buffer compiler, you can generate the gRPC code by running the following command:
 
 ```bash
-protoc --go_out=. --go-grpc_out=. ./internal/delivery/grpc/proto/order.proto
+protoc --go_out=. --go-grpc_out=. ./internal/infra/grpc/proto/order.proto
 ```
 
 ## Accessing the gRPC server

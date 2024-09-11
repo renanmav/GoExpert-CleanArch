@@ -3,7 +3,7 @@ package grpc
 import (
 	"context"
 
-	"github.com/renanmav/GoExpert-CleanArch/internal/delivery/grpc/proto"
+	"github.com/renanmav/GoExpert-CleanArch/internal/infra/grpc/proto"
 	"github.com/renanmav/GoExpert-CleanArch/internal/usecase"
 )
 

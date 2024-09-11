@@ -1,6 +1,6 @@
 syntax = "proto3";
 package proto;
-option go_package = "internal/delivery/grpc/proto";
+option go_package = "internal/infra/grpc/proto";
 
 message CreateOrderRequest {
     float price = 1;

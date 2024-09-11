@@ -4,9 +4,9 @@ import (
 	"database/sql"
 
 	"github.com/renanmav/GoExpert-CleanArch/config"
-	"github.com/renanmav/GoExpert-CleanArch/internal/delivery/grpc"
-	"github.com/renanmav/GoExpert-CleanArch/internal/delivery/grpc/proto"
-	"github.com/renanmav/GoExpert-CleanArch/internal/delivery/webserver"
+	"github.com/renanmav/GoExpert-CleanArch/internal/infra/grpc"
+	"github.com/renanmav/GoExpert-CleanArch/internal/infra/grpc/proto"
+	"github.com/renanmav/GoExpert-CleanArch/internal/infra/webserver"
 	"github.com/renanmav/GoExpert-CleanArch/internal/repository"
 	"github.com/renanmav/GoExpert-CleanArch/internal/usecase"
 
