@@ -88,7 +88,7 @@ service OrderService
 call CreateOrder
 ```
 
-### Generating GraphQL code
+## Generating GraphQL code
 
 Make sure you have gqlgen installed. You can install gqlgen [here](https://github.com/99designs/gqlgen).
 
