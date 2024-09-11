@@ -87,3 +87,13 @@ package proto
 service OrderService
 call CreateOrder
 ```
+
+### Generating GraphQL code
+
+Make sure you have gqlgen installed. You can install gqlgen [here](https://github.com/99designs/gqlgen).
+
+After installing gqlgen, you can generate the GraphQL code by running the following command:
+
+```bash
+go run github.com/99designs/gqlgen generate
+```

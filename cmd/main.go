@@ -4,6 +4,7 @@ import (
 	"database/sql"
 
 	"github.com/renanmav/GoExpert-CleanArch/config"
+	"github.com/renanmav/GoExpert-CleanArch/internal/infra/graphql"
 	"github.com/renanmav/GoExpert-CleanArch/internal/infra/grpc"
 	"github.com/renanmav/GoExpert-CleanArch/internal/infra/grpc/proto"
 	"github.com/renanmav/GoExpert-CleanArch/internal/infra/webserver"
@@ -37,5 +38,8 @@ func main() {
 	grpcServer := grpc.NewGrpcServer(cfg.GrpcServerPort)
 	orderGrpcService := grpc.NewOrderService(*createOrderUseCase)
 	proto.RegisterOrderServiceServer(grpcServer.Server, orderGrpcService)
-	grpcServer.Start()
+	go grpcServer.Start()
+
+	graphqlServer := graphql.NewGraphQLServer(cfg.GraphqlServerPort)
+	graphqlServer.Start()
 }
