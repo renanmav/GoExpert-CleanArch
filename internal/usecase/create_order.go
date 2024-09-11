@@ -3,6 +3,7 @@ package usecase
 import (
 	"github.com/renanmav/GoExpert-CleanArch/internal/entity"
 	"github.com/renanmav/GoExpert-CleanArch/internal/repository"
+	"github.com/renanmav/GoExpert-Events/pkg/events"
 )
 
 type CreateOrderInput struct {
@@ -19,10 +20,20 @@ type CreateOrderOutput struct {
 
 type CreateOrderUseCase struct {
 	OrderRepository repository.OrderRepositoryInterface
+	EventDispatcher events.EventDispatcherInterface
+	OrderCreated    events.EventInterface
 }
 
-func NewCreateOrderUseCase(orderRepository repository.OrderRepositoryInterface) *CreateOrderUseCase {
-	return &CreateOrderUseCase{OrderRepository: orderRepository}
+func NewCreateOrderUseCase(
+	orderRepository repository.OrderRepositoryInterface,
+	eventDispatcher events.EventDispatcherInterface,
+	orderCreated events.EventInterface,
+) *CreateOrderUseCase {
+	return &CreateOrderUseCase{
+		OrderRepository: orderRepository,
+		EventDispatcher: eventDispatcher,
+		OrderCreated:    orderCreated,
+	}
 }
 
 func (c *CreateOrderUseCase) Execute(input CreateOrderInput) (*CreateOrderOutput, error) {
@@ -47,6 +58,9 @@ func (c *CreateOrderUseCase) Execute(input CreateOrderInput) (*CreateOrderOutput
 		Tax:        order.Tax,
 		FinalPrice: order.FinalPrice,
 	}
+
+	c.OrderCreated.SetPayload(output)
+	c.EventDispatcher.Dispatch(c.OrderCreated)
 
 	return output, nil
 }

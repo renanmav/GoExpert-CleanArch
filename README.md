@@ -10,7 +10,7 @@ Clean Architecture is a software design philosophy that separates the elements o
   <img src="./assets/CleanArchitecture.jpg" alt="Clean Architecture" width="500">
 </div>
 
-## Business Rules
+## Business Rules / Requirements
 
 1. The order can be created
     1. The order must contain an ID of type string (UUID v4)
@@ -23,7 +23,9 @@ Clean Architecture is a software design philosophy that separates the elements o
     1. The order cannot have an empty ID
     1. The order cannot have a price equal or less than 0
     1. The order cannot have a tax equal or less than 0
-1. The order can be read by ID
+1. When an order is created, a message is sent to the RabbitMQ exchange
+1. All orders can be read
+1. An order can be read by ID
 
 ## Running the application
 
@@ -119,3 +121,14 @@ mutation CreateOrder {
   }
 }
 ```
+
+## RabbitMQ
+
+Once an order is created, a message is sent to the RabbitMQ exchange. You can access the RabbitMQ management dashboard at `http://localhost:15672`. Username is `user` and password is `password`. The queue is automatically created by the application.
+
+To check messages in the queue:
+
+1. Go to the "Queues" tab
+1. Select the "orders" queue
+1. Click on "Get messages"
+1. You should see the message you created

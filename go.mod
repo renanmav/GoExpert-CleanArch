@@ -8,7 +8,9 @@ require (
 	github.com/go-chi/chi/v5 v5.1.0
 	github.com/go-sql-driver/mysql v1.8.1
 	github.com/google/uuid v1.6.0
+	github.com/renanmav/GoExpert-Events v0.0.0-20240911185107-2494d78601cc
 	github.com/spf13/viper v1.19.0
+	github.com/streadway/amqp v1.1.0
 	github.com/stretchr/testify v1.9.0
 	github.com/vektah/gqlparser/v2 v2.5.16
 	google.golang.org/grpc v1.62.1
