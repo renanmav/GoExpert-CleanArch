@@ -97,3 +97,25 @@ After installing gqlgen, you can generate the GraphQL code by running the follow
 ```bash
 go run github.com/99designs/gqlgen generate
 ```
+
+## Accessing the GraphQL server
+
+Once the application is running, you can access the GraphQL server at `http://localhost:8000/graphql` (check `.env` file).
+
+You can use a GraphQL client to send requests to the server, like [GraphiQL](https://github.com/graphql/graphiql).
+
+Example request to create an order:
+
+```graphql
+mutation CreateOrder {
+  createOrder(input:{
+    price: 100.2,
+    tax: 0.1
+  }) {
+    id
+    price
+    tax
+    finalPrice
+  }
+}
+```
