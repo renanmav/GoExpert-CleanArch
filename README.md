@@ -63,6 +63,12 @@ curl -X POST http://localhost:8000/order \
   }'
 ```
 
+Example request to read all orders:
+
+```bash
+curl -X GET http://localhost:8000/orders
+```
+
 ## Generating gRPC code
 
 Make sure you have the protocol buffer compiler and the Go plugin installed. You can install the protocol buffer compiler [here](https://grpc.io/docs/protoc-installation/).
@@ -90,6 +96,17 @@ service OrderService
 call CreateOrder
 ```
 
+Example request to read all orders:
+
+```bash
+evans -r repl
+
+# From the repl, run the following commands
+package proto
+service OrderService
+call RealAllOrders
+```
+
 ## Generating GraphQL code
 
 Make sure you have gqlgen installed. You can install gqlgen [here](https://github.com/99designs/gqlgen).
@@ -114,6 +131,19 @@ mutation CreateOrder {
     price: 100.2,
     tax: 0.1
   }) {
+    id
+    price
+    tax
+    finalPrice
+  }
+}
+```
+
+Example request to read all orders:
+
+```graphql
+query ReadAllOrders {
+  readAllOrders {
     id
     price
     tax

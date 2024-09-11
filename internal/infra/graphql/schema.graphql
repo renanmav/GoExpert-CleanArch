@@ -11,7 +11,7 @@ input CreateOrderInput {
 }
 
 type Query {
-    orders: [Order!]!
+    readAllOrders: [Order!]!
 }
 
 type Mutation {

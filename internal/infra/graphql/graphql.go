@@ -12,25 +12,29 @@ import (
 )
 
 type GraphQLServer struct {
-	Port               string
-	CreateOrderUseCase usecase.CreateOrderUseCase
+	Port                 string
+	CreateOrderUseCase   usecase.CreateOrderUseCase
+	ReadAllOrdersUseCase usecase.ReadAllOrdersUseCase
 }
 
-func NewGraphQLServer(port string) *GraphQLServer {
+func NewGraphQLServer(
+	port string,
+	createOrderUseCase usecase.CreateOrderUseCase,
+	readAllOrdersUseCase usecase.ReadAllOrdersUseCase,
+) *GraphQLServer {
 	return &GraphQLServer{
-		Port: port,
+		Port:                 port,
+		CreateOrderUseCase:   createOrderUseCase,
+		ReadAllOrdersUseCase: readAllOrdersUseCase,
 	}
-}
-
-func (g *GraphQLServer) RegisterCreateOrderUseCase(createOrderUseCase usecase.CreateOrderUseCase) {
-	g.CreateOrderUseCase = createOrderUseCase
 }
 
 func (g *GraphQLServer) Start() {
 	fmt.Println("Starting GraphQL server on port:", g.Port)
 
 	r := resolver.Resolver{
-		CreateOrderUseCase: g.CreateOrderUseCase,
+		CreateOrderUseCase:   g.CreateOrderUseCase,
+		ReadAllOrdersUseCase: g.ReadAllOrdersUseCase,
 	}
 
 	schema := generated.NewExecutableSchema(generated.Config{Resolvers: &r})

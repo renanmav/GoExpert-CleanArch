@@ -9,12 +9,17 @@ import (
 
 type OrderService struct {
 	proto.UnimplementedOrderServiceServer
-	CreateOrderUseCase usecase.CreateOrderUseCase
+	CreateOrderUseCase   usecase.CreateOrderUseCase
+	ReadAllOrdersUseCase usecase.ReadAllOrdersUseCase
 }
 
-func NewOrderService(createOrderUseCase usecase.CreateOrderUseCase) *OrderService {
+func NewOrderService(
+	createOrderUseCase usecase.CreateOrderUseCase,
+	readAllOrdersUseCase usecase.ReadAllOrdersUseCase,
+) *OrderService {
 	return &OrderService{
-		CreateOrderUseCase: createOrderUseCase,
+		CreateOrderUseCase:   createOrderUseCase,
+		ReadAllOrdersUseCase: readAllOrdersUseCase,
 	}
 }
 
@@ -34,5 +39,26 @@ func (s *OrderService) CreateOrder(ctx context.Context, req *proto.CreateOrderRe
 		Price:      float32(output.Price),
 		Tax:        float32(output.Tax),
 		FinalPrice: float32(output.FinalPrice),
+	}, nil
+}
+
+func (s *OrderService) RealAllOrders(ctx context.Context, req *proto.RealAllOrdersRequest) (*proto.RealAllOrdersResponse, error) {
+	output, err := s.ReadAllOrdersUseCase.Execute()
+	if err != nil {
+		return nil, err
+	}
+
+	orders := make([]*proto.Order, len(output.Orders))
+	for i, order := range output.Orders {
+		orders[i] = &proto.Order{
+			Id:         order.ID,
+			Price:      float32(order.Price),
+			Tax:        float32(order.Tax),
+			FinalPrice: float32(order.FinalPrice),
+		}
+	}
+
+	return &proto.RealAllOrdersResponse{
+		Orders: orders,
 	}, nil
 }

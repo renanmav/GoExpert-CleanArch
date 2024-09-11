@@ -30,18 +30,19 @@ func main() {
 		cfg.EventDispatcher,
 		orderCreatedEvent,
 	)
+	readAllOrdersUseCase := usecase.NewReadAllOrdersUseCase(orderRepository)
 
 	webServer := webserver.NewWebServer(cfg.WebServerPort)
-	orderWebServerHandler := webserver.NewOrderWebServerHandler(*createOrderUseCase)
+	orderWebServerHandler := webserver.NewOrderWebServerHandler(*createOrderUseCase, *readAllOrdersUseCase)
 	webServer.AddHandler("/order", orderWebServerHandler.HandleCreateOrder)
+	webServer.AddHandler("/orders", orderWebServerHandler.HandleReadAllOrders)
 	go webServer.Start()
 
 	grpcServer := grpc.NewGrpcServer(cfg.GrpcServerPort)
-	orderGrpcService := grpc.NewOrderService(*createOrderUseCase)
+	orderGrpcService := grpc.NewOrderService(*createOrderUseCase, *readAllOrdersUseCase)
 	proto.RegisterOrderServiceServer(grpcServer.Server, orderGrpcService)
 	go grpcServer.Start()
 
-	graphqlServer := graphql.NewGraphQLServer(cfg.GraphqlServerPort)
-	graphqlServer.RegisterCreateOrderUseCase(*createOrderUseCase)
+	graphqlServer := graphql.NewGraphQLServer(cfg.GraphqlServerPort, *createOrderUseCase, *readAllOrdersUseCase)
 	graphqlServer.Start()
 }

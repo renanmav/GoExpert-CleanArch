@@ -6,7 +6,6 @@ package resolver
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/renanmav/GoExpert-CleanArch/internal/infra/graphql/generated"
 	"github.com/renanmav/GoExpert-CleanArch/internal/infra/graphql/model"
@@ -33,9 +32,24 @@ func (r *mutationResolver) CreateOrder(ctx context.Context, input model.CreateOr
 	}, nil
 }
 
-// Orders is the resolver for the orders field.
-func (r *queryResolver) Orders(ctx context.Context) ([]*model.Order, error) {
-	panic(fmt.Errorf("not implemented: Orders - orders"))
+// ReadAllOrders is the resolver for the readAllOrders field.
+func (r *queryResolver) ReadAllOrders(ctx context.Context) ([]*model.Order, error) {
+	output, err := r.ReadAllOrdersUseCase.Execute()
+	if err != nil {
+		return nil, err
+	}
+
+	var ordersModel []*model.Order
+	for _, order := range output.Orders {
+		ordersModel = append(ordersModel, &model.Order{
+			ID:         order.ID,
+			Price:      order.Price,
+			Tax:        order.Tax,
+			FinalPrice: order.FinalPrice,
+		})
+	}
+
+	return ordersModel, nil
 }
 
 // Mutation returns generated.MutationResolver implementation.
