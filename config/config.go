@@ -4,6 +4,8 @@ import (
 	"database/sql"
 	"fmt"
 
+	internalEvents "github.com/renanmav/GoExpert-CleanArch/internal/events"
+	"github.com/renanmav/GoExpert-CleanArch/internal/events/handlers"
 	"github.com/renanmav/GoExpert-Events/pkg/events"
 	"github.com/spf13/viper"
 	"github.com/streadway/amqp"
@@ -34,6 +36,7 @@ type conf struct {
 	RabbitMQExchange       string `mapstructure:"RABBITMQ_EXCHANGE"`
 	RabbitMQRoutingKey     string `mapstructure:"RABBITMQ_ROUTING_KEY"`
 	EventDispatcher        events.EventDispatcherInterface
+	OrderCreatedEvent      events.EventInterface
 }
 
 func LoadConfig(path string) (cfg *conf) {
@@ -111,4 +114,15 @@ func (c *conf) LoadRabbitMQ() {
 
 func (c *conf) LoadEventDispatcher() {
 	c.EventDispatcher = events.NewEventDispatcher()
+
+	orderCreatedEvent := internalEvents.NewOrderCreated()
+	c.OrderCreatedEvent = orderCreatedEvent
+
+	orderCreatedHandler := handlers.NewOrderCreatedHandler(
+		c.RabbitMQChannel,
+		c.RabbitMQExchange,
+		c.RabbitMQRoutingKey,
+	)
+
+	c.EventDispatcher.Register("OrderCreated", orderCreatedHandler)
 }

@@ -30,8 +30,8 @@ Clean Architecture is a software design philosophy that separates the elements o
 ## Running the application
 
 1. Clone the repository
-1. Run `docker-compose up -d` to start the infrastructure
-1. Run `go run cmd/main.go` to start the application
+1. Run `make docker-up` to start the infrastructure
+1. Run `make run` to start the application
 
 ## Checking the data
 
@@ -82,7 +82,7 @@ Make sure you have the protocol buffer compiler and the Go plugin installed. You
 After installing the protocol buffer compiler, you can generate the gRPC code by running the following command:
 
 ```bash
-protoc --go_out=. --go-grpc_out=. ./internal/infra/grpc/proto/order.proto
+make proto
 ```
 
 ## Accessing the gRPC server
@@ -131,7 +131,7 @@ Make sure you have gqlgen installed. You can install gqlgen [here](https://githu
 After installing gqlgen, you can generate the GraphQL code by running the following command:
 
 ```bash
-go run github.com/99designs/gqlgen generate
+make graphql
 ```
 
 ## Accessing the GraphQL server
@@ -192,3 +192,13 @@ To check messages in the queue:
 1. Select the "orders" queue
 1. Click on "Get messages"
 1. You should see the message you created
+
+## Using Wire to inject dependencies
+
+This project uses [Wire](https://github.com/google/wire) to inject dependencies. To generate the dependency injection container, run the following command:
+
+```bash
+make wire
+```
+
+This will generate a `wire_gen.go` file with the dependency injection container.
